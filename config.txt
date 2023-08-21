@@ -1,0 +1,2 @@
+codeFilePath='/Users/aidanmcclung/Desktop/Summer_Exoplanets/'
+dataFilePath='/Users/aidanmcclung/Desktop/Summer_Exoplanets/Demo/'
