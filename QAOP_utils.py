@@ -5,17 +5,17 @@
 
 import numpy as np
 
-def readConfigFile():
+def readConfigFile(configPath=''):
     try:
-        with open('config.txt','r') as config_file:
+        with open(configPath+'config.txt','r') as config_file:
             codeFilePath = config_file.readline()
             dataFilePath = config_file.readline()
             #The lines are stored like dataFilePath='path/Demo/' but we dont want the info.
             codeFilePath = codeFilePath.split("'")[1]
             dataFilePath = dataFilePath.split("'")[1]
-        return codeFilePath,dataFilePath
-    except:
-        return '',''
+        return codeFilePath,dataFilePath,'no errors'
+    except Exception as e:
+        return '','', e
 
 
 def getFilepath(number,folder='output/',ext='.fits'):
