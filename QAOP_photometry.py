@@ -11,10 +11,14 @@ import os #for file handling and saving!
 import io #for writing simple log files!
 
 
-#partially handle the path changes:
-with open('config.txt','r') as config_file:
-    codeFilePath = config_file.readline()
-    dataFilePath = config_file.readline()
+#load config file data
+try:
+    from QAOP_utils import readConfigFile
+except ModuleNotFoundError:
+    from QAOP.QAOP_utils import readConfigFile
+codeFilePath,dataFilePath,errormsg = readConfigFile()
+#print(codeFilePath,dataFilePath,errormsg)
+
 #------------------
 #These paths should be changed if needed
 ApertureFilePath = dataFilePath + "apertures.csv"
@@ -140,16 +144,25 @@ class photInstance:
         
         if not disableConfig:
             #load paths from config
-            from QAOP_utils import readConfigFile
-            codeFilePath,dataFilePath = readConfigFile()
+            try:
+                from QAOP_utils import readConfigFile
+            except ModuleNotFoundError:
+                from QAOP.QAOP_utils import readConfigFile
+            codeFilePath,dataFilePath,errormsg = readConfigFile()
+            print(errormsg)
+            
+            apertureFilePath = dataFilePath + apertureFilePath
+            resultDir = dataFilePath + resultDir
+        if disableConfig == 2:
             apertureFilePath = dataFilePath + apertureFilePath
             resultDir = dataFilePath + resultDir
         #continue with init, using either the paths we had or the extended ones
-        
         self.names,self.apertures,self.annuli = loadAperturesFromFile(apertureFilePath)
         #now, check there's a results dir in the root, and make one if not
         #  As of Major Update 1, the 'photometry' dir should be made in the master, however, it's good to be safe
-        if not os.listdir().count(resultDir): os.mkdir(resultDir)
+        #print(resultDir)
+        #print()
+        #if not os.listdir(resultDir+'/./').count(resultDir): os.mkdir(resultDir)
         #now that we know the directory exists, we can safely check how many master_table are in it :)
         master_count = os.listdir(resultDir).count('master_table.ecsv')
         if master_count:
@@ -268,7 +281,7 @@ class photInstance:
         
     def clearMasterBuffer(self):
         self.MasterResultTab = self.createMasterTable()
-        self.master_tab.write(resultDir+'/master_table.ecsv',format='ascii.ecsv')
+        self.master_tab.write(self.resultDir+'/master_table.ecsv',format='ascii.ecsv',overwrite=True)
         
         self.master_history.append("!! Master Buffer Cleared !!") #append a new status message to the log list
         with open(self.resultDir+'/master_log.txt','a') as log: #open in "append" mode
