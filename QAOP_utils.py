@@ -5,15 +5,15 @@
 
 import numpy as np
 
-def readConfigFile(configPath=''):
+def readConfigFile(configPath='QAOP/'):
     try:
         with open(configPath+'config.txt','r') as config_file:
             codeFilePath = config_file.readline()
             dataFilePath = config_file.readline()
-            #The lines are stored like dataFilePath='path/Demo/' but we dont want the info.
+            #The lines are stored like dataFilePath='path/Demo/' but we dont want the info about what the line is
             codeFilePath = codeFilePath.split("'")[1]
             dataFilePath = dataFilePath.split("'")[1]
-        return codeFilePath,dataFilePath,'no errors'
+        return codeFilePath,dataFilePath,'no errors reading config file'
     except Exception as e:
         return '','', e
 
