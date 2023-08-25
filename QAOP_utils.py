@@ -37,6 +37,9 @@ def dmsToDeg(d,m,s):
 def diffMag(fluxV,fluxC):
     return -2.5 * np.log10(fluxV/fluxC)
 
+def mag(flux):
+    return -2.5 * np.log10(flux)
+
 
 #iTelescope date conversions.
 def getTimeFromDate(dateStr):

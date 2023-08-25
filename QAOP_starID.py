@@ -13,10 +13,14 @@ import numpy as np
 
 
 #enable use of QAOP config file
-with open('config.txt','r') as config_file:
-    codeFilePath = config_file.readline()
-    dataFilePath = config_file.readline()
-
+#with open('config.txt','r') as config_file:
+#    codeFilePath = config_file.readline()
+#    dataFilePath = config_file.readline()
+try:
+    from QAOP_utils import readConfigFile
+except ModuleNotFoundError:
+    from QAOP.QAOP_utils import readConfigFile
+codeFilePath,dataFilePath,errormsg = readConfigFile()
 
 
 #Autonamer section ---------

@@ -2,6 +2,21 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import quad
 
+''' 
+This module implements the limb darkening model of exoplanets transits 
+for use in a project by students taking PHYS 315 at Queen's University. 
+
+The functions are implementations of that described by Mandel & Agol (ApJ 580, 2001).
+    https://iopscience.iop.org/article/10.1086/345520/pdf
+
+The model takes 4 parameters to characterize it, determined by the star.
+Values can be found at:
+https://vizier.cds.unistra.fr/viz-bin/VizieR-3?-source=J/A%2bA/363/1081/atlasco
+
+(For PHYS 315 students are using the V band)
+'''
+
+
 #For log[M/H]= -1.0, v = 2.0 kms, log g = 4.5
 a1, a2, a3, a4 = 0.2621,0.6838,-0.0214,-0.1504 #Teff = 5250K
 aa1, aa2, aa3, aa4 = 0.1551,1.2391,-0.8769,0.2287 #Teff = 5500K
